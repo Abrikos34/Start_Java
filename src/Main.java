@@ -8,7 +8,7 @@ public class Main {
     static int result;
 
     public static void main (String[] args) {
-        System.out.println("Введите два числа : ");
+        System.out.println("Введите пример без пробелов : ");
         String userInput = scan.nextLine();
 
         char[] oper_char = new char[10];
