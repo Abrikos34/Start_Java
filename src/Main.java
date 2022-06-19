@@ -8,9 +8,9 @@ public class Main {
     static int result;
 
     public static void main (String[] args) {
-        System.out.println("Введите пример без пробелов : ");
-        String userInput = scan.nextLine();
-
+        System.out.println("Введите пример : ");
+        String userIn = scan.nextLine();
+        String userInput = userIn.replaceAll("\\s","");
         char[] oper_char = new char[10];
 
         for (int i = 0; i < userInput.length(); i++) {
@@ -92,9 +92,8 @@ public class Main {
                     return 10;
             }
         } catch (InputMismatchException e) {
-            throw new InputMismatchException("Неверный формат данных");
-        }
-        return -1;
+            throw new InputMismatchException();
+        } return -1;
     }
 
     public static int calc (int num1, int num2, char op) {
