@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -33,8 +34,20 @@ public class Main {
         String stb0 = signs[0];
         String stb1 = signs[1];
         String strings = stb1.trim();
-        var1 = romanToNumber(stb0);
-        var2 = romanToNumber(strings);
+        var1 = convertRomanToArab(stb0);
+        var2 = convertRomanToArab(strings);
+
+        if (signs.length > 2
+        )
+            throw new ArrayIndexOutOfBoundsException("Не более двух операндов!");
+        else
+            signs = Arrays.copyOf(signs, 2);
+        try {
+            stb0 = signs[0].trim();
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
+
         if (var1 < 0 && var2 < 0) {
             result =0;}
         else {
@@ -43,16 +56,19 @@ public class Main {
             String resultRoman = convertNumToRoman(result);
             System.out.println(stb0 + " " + operation + " " + strings + " = " + resultRoman);
         }
-        var1 = Integer.parseInt(stb0);
-        var2 = Integer.parseInt(strings);
+        if (var1 == -1) var1 = Integer.parseInt(stb0);
+        if (var2 == -1) var2 = Integer.parseInt(strings);
+
         result = calc(var1, var2, operation);
         System.out.println("Результат ArabNum:");
         System.out.println(var1 + " " + operation + " " + var2 + " = " + result);
+
+
     }
 
 
 
-    private static String convertNumToRoman (int numArabian) {
+    static String convertNumToRoman(int numArabian) {
         String[] roman = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
                 "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
                 "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX",
@@ -65,40 +81,29 @@ public class Main {
 
         return s;
     }
-
-
-    private static int romanToNumber (String roman) {
+    static int convertRomanToArab (String numRoman) {
         try {
-            switch (roman) {
-                case "I":
-                    return 1;
-                case "II":
-                    return 2;
-                case "III":
-                    return 3;
-                case "IV":
-                    return 4;
-                case "V":
-                    return 5;
-                case "VI":
-                    return 6;
-                case "VII":
-                    return 7;
-                case "VIII":
-                    return 8;
-                case "IX":
-                    return 9;
-                case "X":
-                    return 10;
+            switch (numRoman) {
+                case "I" -> {return 1;}
+                case "II" -> {return 2;}
+                case "III" -> {return 3;}
+                case "IV" -> {return 4;}
+                case "V" -> {return 5;}
+                case "VI" -> {return 6;}
+                case "VII" -> {return 7;}
+                case "VIII" -> {return 8;}
+                case "IX" -> {return 9;}
+                case "X" -> {return 10;}
             }
         } catch (InputMismatchException e) {
             throw new InputMismatchException();
         } return -1;
     }
 
-    public static int calc (int num1, int num2, char op) {
+    public static int calc(int num1, int num2, char znak) {
+        if (num1 < 0 || num1 > 10 || num2 < 0 || num2 > 10) throw new IllegalArgumentException("Число больше 10");
         int result = 0;
-        switch (op) {
+        switch (znak) {
             case '+':
                 result = num1 + num2;
                 break;
@@ -109,6 +114,7 @@ public class Main {
                 result = num1 * num2;
                 break;
             case '/':
+
                 try {
                     result = num1 / num2;
                 } catch (ArithmeticException | InputMismatchException e) {
@@ -120,6 +126,7 @@ public class Main {
                 break;
             default:
                 throw new IllegalArgumentException("Не верный знак!");
+
         }
         return result;
     }
